@@ -1,0 +1,40 @@
+{
+  "people": [
+    {
+      "title": "Nikola Mirilo",
+      "description": "IT Project Manager",
+      "coordinates": {
+        "latitude": 44.8361188,
+        "longitude": 20.385826
+      },
+      "image": "https://media.licdn.com/dms/image/D4D03AQHp6VF4VO5OPQ/profile-displayphoto-shrink_200_200/0/1703514537342?e=2147483647&v=beta&t=jviVRwjHgUZ6gdR7ROj9VdpJSDtHMmHo01EpI53Oorc"
+    },
+    {
+      "title": "Pera Peric",
+      "description": "IT Engineer",
+      "coordinates": {
+        "latitude": 44.8399999,
+        "longitude": 20.384826
+      },
+      "image": "https://img.freepik.com/free-photo/handsome-bearded-guy-posing-against-white-wall_273609-20597.jpg?size=626&ext=jpg&ga=GA1.1.1141335507.1718150400&semt=sph"
+    },
+    {
+      "title": "Mika Mikic",
+      "description": "Business Analyst",
+      "coordinates": {
+        "latitude": 44.8390188,
+        "longitude": 20.381424
+      },
+      "image": "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg"
+    },
+    {
+      "title": "Isicko Doricko",
+      "description": "Marketing Specialist",
+      "coordinates": {
+        "latitude": 44.8398188,
+        "longitude": 20.388825
+      },
+      "image": "https://inspiragrupa.com/wp-content/uploads/2023/01/isidoraninkovic-1.webp"
+    }
+  ]
+}

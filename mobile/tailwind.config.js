@@ -3,5 +3,11 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: {
+    "postcss-import": {},
+    "postcss-preset-env": {
+      stage: 0,
+    },
+    cssnano: {},
+  },
 };
