@@ -11,17 +11,17 @@ const List = () => {
           return (
             <View
               key={idx}
-              style={tw`flex flex-row-reverse gap-4 justify-center items-start h-16 border-2 border-blue-500 w-full`}
+              style={tw`flex flex-row-reverse gap-5 justify-end items-center h-20 border-2 border-blue-500 w-full rounded-lg px-4`}
             >
               <View style={tw`flex flex-col justify-center h-full items-start`}>
-                <Text>{item.title}</Text>
+                <Text style={tw`font-bold`}>{item.title}</Text>
                 <Text>{item.description}</Text>
               </View>
               <Image
                 source={{
                   uri: item.image,
                 }}
-                style={tw`w-16 h-full rounded-full`}
+                style={tw`w-16 h-16 rounded-full`}
               />
             </View>
           );

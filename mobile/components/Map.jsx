@@ -7,21 +7,26 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  Alert,
 } from "react-native";
 import MapView, { Circle, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import tw from "twrnc";
+import SyncStorage from "sync-storage";
 
 const Map = ({ people }) => {
   const [coordinates, setCoordinates] = useState(null);
 
   const startBackgroundTracking = async () => {
     const res = await Location.requestForegroundPermissionsAsync();
-    if (res.status == "granted") {
+    if (res.status === "granted") {
       const data = await Location.getCurrentPositionAsync();
-      setCoordinates({
-        lat: data.coords.latitude,
-        long: data.coords.longitude,
-      });
+      const coords = {
+        latitude: data.coords.latitude,
+        longitude: data.coords.longitude,
+      };
+      setCoordinates(coords);
+      await SyncStorage.setItem("latitude", coords.latitude.toString());
+      await SyncStorage.setItem("longitude", coords.longitude.toString());
       await Location.requestBackgroundPermissionsAsync();
     }
   };
@@ -45,6 +50,34 @@ const Map = ({ people }) => {
     return R * c;
   };
 
+  useEffect(() => {
+    const fetchCoordinates = async () => {
+      const data = SyncStorage.init();
+      console.log(data);
+      const latitude = await SyncStorage.getItem("latitude");
+      const longitude = await SyncStorage.getItem("longitude");
+      Alert.alert("Alert Title", latitude, [
+        {
+          text: "Ask me later",
+          onPress: () => console.log("Ask me later pressed"),
+        },
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
+      if (latitude && longitude) {
+        setCoordinates({
+          latitude: parseFloat(latitude),
+          longitude: parseFloat(longitude),
+        });
+      }
+    };
+    fetchCoordinates();
+  }, [coordinates]);
+
   return (
     <View style={tw`flex flex-col justify-center items-center w-full gap-2`}>
       <Button
@@ -54,14 +87,14 @@ const Map = ({ people }) => {
       />
       {coordinates ? (
         <>
-          <Text>Latitude: {coordinates.lat}</Text>
-          <Text>Longitude: {coordinates.long}</Text>
+          <Text>Latitude: {coordinates.latitude}</Text>
+          <Text>Longitude: {coordinates.longitude}</Text>
           <MapView
             style={styles.map}
             provider={PROVIDER_GOOGLE}
             region={{
-              latitude: coordinates.lat,
-              longitude: coordinates.long,
+              latitude: coordinates.latitude,
+              longitude: coordinates.longitude,
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
             }}
@@ -69,8 +102,8 @@ const Map = ({ people }) => {
           >
             <Circle
               center={{
-                latitude: coordinates.lat,
-                longitude: coordinates.long,
+                latitude: coordinates.latitude,
+                longitude: coordinates.longitude,
               }}
               radius={100}
               fillColor="#A4DFFA"
@@ -79,7 +112,10 @@ const Map = ({ people }) => {
             />
             {people.map((marker, index) => {
               const distance = haversineDistance(
-                { latitude: coordinates.lat, longitude: coordinates.long },
+                {
+                  latitude: coordinates.latitude,
+                  longitude: coordinates.longitude,
+                },
                 marker.coordinates
               );
               const isWithinRadius = distance <= 100;
@@ -89,21 +125,22 @@ const Map = ({ people }) => {
                   coordinate={marker.coordinates}
                   title={marker.title}
                   description={marker.description}
-                  flat={true}
                 >
-                  <Image
-                    source={{ uri: marker.image }}
-                    style={[
-                      styles.markerImage,
-                      isWithinRadius && styles.withinRadiusImage,
-                    ]}
-                  />
-                  <Image
-                    source={{
-                      uri: "https://icon-library.com/images/check-in-icon/check-in-icon-8.jpg",
-                    }}
-                    style={[styles.pinImage]}
-                  />
+                  <View>
+                    <Image
+                      source={{ uri: marker.image }}
+                      style={[
+                        styles.markerImage,
+                        isWithinRadius && styles.withinRadiusImage,
+                      ]}
+                    />
+                    <Image
+                      source={{
+                        uri: "https://icon-library.com/images/check-in-icon/check-in-icon-8.jpg",
+                      }}
+                      style={[styles.pinImage]}
+                    />
+                  </View>
                 </Marker>
               );
             })}
