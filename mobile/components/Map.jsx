@@ -16,21 +16,6 @@ import SyncStorage from "sync-storage";
 const Map = ({ people }) => {
   const [coordinates, setCoordinates] = useState(null);
 
-  const startBackgroundTracking = async () => {
-    const res = await Location.requestForegroundPermissionsAsync();
-    if (res.status === "granted") {
-      const data = await Location.getCurrentPositionAsync();
-      const coords = {
-        latitude: data.coords.latitude,
-        longitude: data.coords.longitude,
-      };
-      setCoordinates(coords);
-      await SyncStorage.setItem("latitude", coords.latitude.toString());
-      await SyncStorage.setItem("longitude", coords.longitude.toString());
-      await Location.requestBackgroundPermissionsAsync();
-    }
-  };
-
   const haversineDistance = (coords1, coords2) => {
     const toRad = (x) => (x * Math.PI) / 180;
     const R = 6371e3; // Earth radius in meters
@@ -50,41 +35,36 @@ const Map = ({ people }) => {
     return R * c;
   };
 
+  const startBackgroundTracking = async () => {
+    const res = await Location.requestForegroundPermissionsAsync();
+    if (res.status === "granted") {
+      const data = await Location.getCurrentPositionAsync();
+      setCoordinates({
+        latitude: data.coords.latitude,
+        longitude: data.coords.longitude,
+      });
+      SyncStorage.set("lat", coordinates.latitude.toString());
+      SyncStorage.set("lng", coordinates.longitude.toString());
+    }
+  };
+
+  const data = SyncStorage.init();
+
   useEffect(() => {
-    const fetchCoordinates = async () => {
-      const data = SyncStorage.init();
-      console.log(data);
-      const latitude = await SyncStorage.getItem("latitude");
-      const longitude = await SyncStorage.getItem("longitude");
-      Alert.alert("Alert Title", latitude, [
-        {
-          text: "Ask me later",
-          onPress: () => console.log("Ask me later pressed"),
-        },
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") },
-      ]);
-      if (latitude && longitude) {
-        setCoordinates({
-          latitude: parseFloat(latitude),
-          longitude: parseFloat(longitude),
-        });
-      }
-    };
-    fetchCoordinates();
-  }, [coordinates]);
+    startBackgroundTracking();
+    const latitude = SyncStorage.get("lat");
+    const longitude = SyncStorage.get("lng");
+    console.log(latitude, longitude);
+    if (latitude && longitude) {
+      setCoordinates({
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
+      });
+    }
+  }, []);
 
   return (
     <View style={tw`flex flex-col justify-center items-center w-full gap-2`}>
-      <Button
-        onPress={startBackgroundTracking}
-        color="green"
-        title="Get Location"
-      />
       {coordinates ? (
         <>
           <Text>Latitude: {coordinates.latitude}</Text>
@@ -147,7 +127,11 @@ const Map = ({ people }) => {
           </MapView>
         </>
       ) : (
-        <Text>Fetching location...</Text>
+        <Button
+          onPress={startBackgroundTracking}
+          color="green"
+          title="Enable Location"
+        />
       )}
     </View>
   );

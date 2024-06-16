@@ -4,13 +4,12 @@ import Map from "../components/Map";
 import { Button, View } from "react-native";
 import List from "../components/List";
 import tw from "twrnc";
+import { pageStyle } from "../style";
 
 const Connect = () => {
   const [selectedTab, setSelectedTab] = useState("list");
   return (
-    <View
-      style={tw`flex flex-col py-20 px-4 h-full justify-center items-center w-full gap-4`}
-    >
+    <View style={pageStyle}>
       <View
         style={tw`flex flex-row-reverse w-full justify-center items-center gap-5`}
       >

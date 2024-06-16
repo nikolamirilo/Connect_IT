@@ -11,7 +11,7 @@ const List = () => {
           return (
             <View
               key={idx}
-              style={tw`flex flex-row-reverse gap-5 justify-end items-center h-20 border-2 border-blue-500 w-full rounded-lg px-4`}
+              style={tw`flex flex-row-reverse gap-5 justify-end items-center h-20 border-2 border-emerald-500 w-full rounded-lg px-4`}
             >
               <View style={tw`flex flex-col justify-center h-full items-start`}>
                 <Text style={tw`font-bold`}>{item.title}</Text>
