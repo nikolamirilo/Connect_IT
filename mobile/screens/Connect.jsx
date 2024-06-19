@@ -5,12 +5,13 @@ import { Button, View } from "react-native";
 import List from "../components/List";
 import tw from "twrnc";
 import { pageStyle } from "../style";
+import LinkedInProfile from "../components/Profile";
 
 const Connect = () => {
   const [selectedTab, setSelectedTab] = useState("list");
   return (
     <View style={pageStyle}>
-      <View
+      {/* <View
         style={tw`flex flex-row-reverse w-full justify-center items-center gap-5`}
       >
         <Button
@@ -27,7 +28,8 @@ const Connect = () => {
         />
       </View>
 
-      {selectedTab == "list" ? <List /> : <Map people={data.people} />}
+      {selectedTab == "list" ? <List /> : <Map people={data.people} />} */}
+      <LinkedInProfile/>
     </View>
   );
 };
