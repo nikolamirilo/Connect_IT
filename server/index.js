@@ -1,31 +1,24 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const geolib = require("geolib"); // To calculate distance
-
+const cors = require("cors");
+const allRoutes = require("./routes/index.routes");
+const { client } = require("./lib/database.config");
 const app = express();
-app.use(bodyParser.json());
 
-let users = []; // This should be a database in a real app
+(async () => {
+  try {
+    await client.connect();
+    console.log('Connected to the database');
 
-app.post("/update-location", (req, res) => {
-  const { id, latitude, longitude } = req.body;
-  users = users.filter((user) => user.id !== id);
-  users.push({ id, latitude, longitude });
-  res.sendStatus(200);
-});
+    app.use(bodyParser.json());
+    app.use(cors());
+    app.use("/", allRoutes);
 
-app.post("/nearby-users", (req, res) => {
-  const { latitude, longitude, radius } = req.body;
-  const nearbyUsers = users.filter((user) =>
-    geolib.isPointWithinRadius(
-      { latitude: user.latitude, longitude: user.longitude },
-      { latitude, longitude },
-      radius
-    )
-  );
-  res.json({ users: nearbyUsers });
-});
-
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
+    const PORT = 3000;
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error('Failed to connect to the database:', error);
+  }
+})();

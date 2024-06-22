@@ -1,6 +1,7 @@
 {
   "people": [
     {
+      "username": "nikola-mirilo",
       "title": "Nikola Mirilo",
       "description": "IT Project Manager",
       "coordinates": {
@@ -10,6 +11,7 @@
       "image": "https://media.licdn.com/dms/image/D4D03AQHp6VF4VO5OPQ/profile-displayphoto-shrink_200_200/0/1703514537342?e=2147483647&v=beta&t=jviVRwjHgUZ6gdR7ROj9VdpJSDtHMmHo01EpI53Oorc"
     },
     {
+      "username": "pera-peric",
       "title": "Pera Peric",
       "description": "IT Engineer",
       "coordinates": {
@@ -19,6 +21,7 @@
       "image": "https://img.freepik.com/free-photo/handsome-bearded-guy-posing-against-white-wall_273609-20597.jpg?size=626&ext=jpg&ga=GA1.1.1141335507.1718150400&semt=sph"
     },
     {
+      "username": "mika-mikic",
       "title": "Mika Mikic",
       "description": "Business Analyst",
       "coordinates": {
@@ -28,6 +31,7 @@
       "image": "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg"
     },
     {
+      "username": "isidora-ninkovic",
       "title": "Isidora Ninkovic",
       "description": "Marketing Specialist",
       "coordinates": {

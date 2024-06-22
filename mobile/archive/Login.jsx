@@ -23,7 +23,6 @@ const LinkedInLogin = () => {
   };
 
   const exchangeAuthorizationCodeForAccessToken = async (code) => {
-    console.log("start")
     setLoading(true);
     const response = await fetch('https://www.linkedin.com/oauth/v2/accessToken', {
       method: 'POST',

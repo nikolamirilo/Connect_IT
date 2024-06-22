@@ -9,6 +9,7 @@ import LinkedInProfile from "../components/Profile";
 
 const Connect = () => {
   const [selectedTab, setSelectedTab] = useState("list");
+  let usernames = []
   return (
     <View style={pageStyle}>
       <View
@@ -28,7 +29,7 @@ const Connect = () => {
         />
       </View>
 
-      {selectedTab == "list" ? <List /> : <Map people={data.people} />}
+      {selectedTab == "list" ? <List usernames={usernames} /> : <Map people={data.people} />}
       {/* <LinkedInProfile/> */}
     </View>
   );

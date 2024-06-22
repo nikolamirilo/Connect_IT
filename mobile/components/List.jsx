@@ -3,7 +3,9 @@ import { Alert, Button, Image, Text, TextInput, View } from "react-native";
 import tw from "twrnc";
 import data from "../data.json";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-const List = () => {
+
+
+const List = ({usernames}) => {
   return (
     <View style={tw`flex flex-col justify-center items-center w-full gap-4`}>
       {data.people &&
@@ -16,9 +18,17 @@ const List = () => {
                 unFillColor="#FFFFFF"
                 text="Custom Checkbox"
                 innerIconStyle={{ borderWidth: 2 }}
-                textStyle={{ fontFamily: "JosefinSans-Regular" }}
                 onPress={(isChecked) => {
-                  console.log(isChecked);
+                  if(isChecked){
+                    usernames.push(item.username)
+                  }else{
+                    let indexToRemove = usernames.indexOf(item.username);
+                    if (indexToRemove !== -1) {
+                      // Remove the item at the specified index
+                      usernames.splice(indexToRemove, 1);
+                  }
+                  }
+                  console.log(usernames)
                 }}
               />
               <View
