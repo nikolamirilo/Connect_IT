@@ -74,7 +74,6 @@ const App = () => {
         name="Authorize"
         component={Auth}
         options={{
-          status: "null",
           tabBarIcon: ({ size }) => (
             <Image
               source={{

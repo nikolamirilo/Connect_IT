@@ -8,9 +8,10 @@ const Profile = ({navigation, route}) => {
   useEffect(() => {
     async function getUserProfile() {
       const token = await AsyncStorage.getItem('linkedin_access_token');
+      console.log(token)
       if (token) {
         const response = await fetch('https://api.linkedin.com/v2/me', {
-          headers: { 'Authorization': `Bearer AQWoBNzeBqbtJRdbvtR5hYSMa2b7Rc6LaAdcvUVj0zbXmI-ychbvohXZAFRsIgd4qmAe1CS3LF3kScY9mVtA4aYStk1emk4j9fV1nRSEvS7k7gKchhUEquAc-QsYLLVXoX0Uvy4iIy3WrukExtwwtpzMQmHC8zfDeDLbwSaLXMIbAjysOnZjUY2cq--Kq_56C6U76OHb1A-XsHfHNQ9S12GMB85u5TIjyC4disz5n83SZHdW_3mpQKyDKL1n0lnJuIWwFgVuw_gXhjMmXQ-B1QVwgSvWQz8hnToGL39CuzM-jqS2n3gnKtrMl3V3dD-8aw0e_UF7wuMl0gudgoaW9V_6bi5wnw` },
+          headers: { 'Authorization': `Bearer ${token}`},
         });
         console.log(response.ok)
         if(response.ok){
@@ -18,7 +19,7 @@ const Profile = ({navigation, route}) => {
             console.log(userData)
             setUser(userData);
         } else{
-            await AsyncStorage.removeItem("linkedin_access_token", {status: "fail"})
+            await AsyncStorage.removeItem("linkedin_access_token")
             navigation.navigate("Authorize")
         }
       }
@@ -26,17 +27,9 @@ const Profile = ({navigation, route}) => {
     getUserProfile();
   }, []);
 
-  if (!user) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
-
   return (
     <View>
-      <Text>Welcome {user.name} {route.params.name}</Text>
+      <Text>Welcome Here {user && user.name}</Text>
     </View>
   );
 };
