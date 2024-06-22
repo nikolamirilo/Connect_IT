@@ -11,25 +11,25 @@ const Connect = () => {
   const [selectedTab, setSelectedTab] = useState("list");
   return (
     <View style={pageStyle}>
-      {/* <View
+      <View
         style={tw`flex flex-row-reverse w-full justify-center items-center gap-5`}
       >
         <Button
           title="       List       "
           onPress={() => setSelectedTab("list")}
-          color="blue"
+          color="orange"
           style={tw`w-92`}
         />
         <Button
           title="       Map       "
           onPress={() => setSelectedTab("map")}
-          color="green"
+          color="#059669"
           st
         />
       </View>
 
-      {selectedTab == "list" ? <List /> : <Map people={data.people} />} */}
-      <LinkedInProfile/>
+      {selectedTab == "list" ? <List /> : <Map people={data.people} />}
+      {/* <LinkedInProfile/> */}
     </View>
   );
 };

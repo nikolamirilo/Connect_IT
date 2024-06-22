@@ -20,6 +20,7 @@
     "react-dom": "18.2.0",
     "react-linkedin-login-oauth2": "^2.0.1",
     "react-native": "0.74.2",
+    "react-native-bouncy-checkbox": "^4.0.1",
     "react-native-geolocation-service": "^5.3.1",
     "react-native-maps": "1.14.0",
     "react-native-navigation": "^7.40.0",
